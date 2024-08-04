@@ -18,6 +18,24 @@ import os
 
 load_dotenv()
 
+# -------------- 操作ガイド --------------
+
+
+# python3 index.py で実行可能
+
+# 一つのクエリに対して何件の検索結果を取得してくるか
+NUM_RESULTS = 30
+# メールアドレスを探索するページの深さの指定
+MAX_DEPTH = 4
+# 一つのサイトにおける、メールアドレスの最大探索回数
+MAX_SEARCH = 50
+
+# ---------------------------------------
+
+
+
+
+
 
 SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
 API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -67,13 +85,13 @@ def normalize_url(url):
     return normalized_url
 
 # 指定したurlから、メールアドレスが存在するかどうか、遷移先のURLを取得
-def check_mail_in_page(url, visited, base_url, counter, max_depth=3):
+def check_mail_in_page(url, visited, base_url, counter, max_depth=MAX_DEPTH):
     normalized_url = normalize_url(url)
     if normalized_url in visited:
         return False
 
     counter += 1
-    if counter > 50 or max_depth == 0:
+    if counter > MAX_SEARCH or max_depth == 0:
         return True
     visited.add(normalized_url)
 
@@ -134,7 +152,7 @@ def check_mail_in_page(url, visited, base_url, counter, max_depth=3):
     return False
 
 # google api を用いて50件の
-def google_search(query, api_key, cse_id, num_results=30):
+def google_search(query, api_key, cse_id, num_results=NUM_RESULTS):
     service = build("customsearch", "v1", developerKey=api_key)
     results = []
     for start_index in range(1, num_results, 10):  # start_indexを1, 11, 21, 31, 41に設定
@@ -146,7 +164,6 @@ def google_search(query, api_key, cse_id, num_results=30):
 for query in data_queries:
     results = google_search(query, API_KEY, SEARCH_ENGINE_ID)
     urls = [item['link'] for item in results]
-    # urls = ["https://www.re-idea.jp",]
     search_urls = {url: [] for url in urls}
 
     # 各URLをチェック
