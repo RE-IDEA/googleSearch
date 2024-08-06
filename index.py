@@ -32,7 +32,7 @@ dir_path = os.path.dirname(__file__)
 # gspreadの認証エラー例 (2024年 8月6日)
 # 参照: https://mori-memo.hateblo.jp/entry/2023/05/06/152208
 # 1. google cloud console から client_secret.json を取得する。
-# 2. authorized_user.json(出力ファイル) の名前を別の名前に更新して、実行後に認証を行う。
+# 2. authorized_user.json(出力ファイル) の名前を別の名前に更新して、実行後に認証を行う
 gc = gspread.oauth(
     credentials_filename=os.path.join(dir_path, "client_secret.json"), # 認証用のJSONファイル
     authorized_user_filename=os.path.join(dir_path, "authorized_user.json") # 証明書の出力ファイル
