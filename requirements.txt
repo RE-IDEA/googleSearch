@@ -1,0 +1,4 @@
+selenium==4.11.2
+google-api-python-client==2.88.0
+gspread==5.9.0
+python-dotenv==1.0.0
