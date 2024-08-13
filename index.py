@@ -52,7 +52,6 @@ global counter
 
 # 設定済みのdriverを用いて aタグ のhref要素を調べる
 def get_all_links(driver):
-    print(driver)
     links = driver.find_elements(By.CSS_SELECTOR, "a[href]")
     if not links:
         links = driver.find_elements(By.XPATH, "//a[@href]")
