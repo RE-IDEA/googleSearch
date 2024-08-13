@@ -76,6 +76,7 @@ def check_mail_in_page(url, visited, base_url, counter, max_depth=3):
     if normalized_url in visited:
         return False
 
+
     counter += 1
     if counter > 50 or max_depth == 0:
         return True
